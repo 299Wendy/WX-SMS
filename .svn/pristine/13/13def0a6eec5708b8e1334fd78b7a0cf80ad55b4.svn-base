@@ -1,0 +1,66 @@
+  <view class="tab-header">
+    <view class="tab-area">
+     <text  selectable>流程号：{{ProcessID}}</text>
+     <text  selectable>\n状态：{{ProcessStatus}}</text>
+    </view> 
+  <view class="tab-type">
+    <text selectable>申请类型：{{ProcessType}}</text>
+    <text selectable>\n申请者: {{Applyer}}</text>
+    <text  wx:if="{{ProcessType!='入库'}}" selectable>\n样品去处：{{sampleDest}}；</text>
+    <text  wx:if="{{ProcessType!='入库'}}" selectable>样品用途：{{sampleUseage}}</text>
+  </view>
+  </view>
+
+   <scroll-view scroll-y class="tab-content">
+    <view class='list-content' wx:for="{{ProcInfo}}" wx:key="barcode" wx:for-item="ProcInfoitem">
+      <view class='source' bindtap='getSample'data-index='{{index}}'data-value='{{ProcInfoitem}}'>
+        <text class='list-txt list-title' >产品名称:{{ProcInfoitem.displayname}}</text>
+        <text class='list-txt' >\n产品类别:{{ProcInfoitem.productcategory}}</text>
+        <text class='list-txt' >Barcode:{{ProcInfoitem.barcode}}</text>
+        <text class='list-txt' >\n登记人:{{ProcInfoitem.register}}</text>         
+        <text class='list-txt' >代管人:{{ProcInfoitem.owner}}</text>
+        <text class='list-txt'>\n位置:{{ProcInfoitem.location}}</text>  
+        <text class='list-txt' >状态:{{ProcInfoitem.status}}</text>
+      </view>
+      <view wx:if="{{buttonVisible&Imgflg}}" class='source-img' >
+      <image class='image' bindtap='edit' src="{{editImg}}" data-index='{{index}}'></image>
+      </view>
+    </view>
+   </scroll-view>
+   <view wx:if="{{buttonVisible}}" class='buttom-bar'> 
+      <button type='primary' size='mini' bindtap='approve'>APPROVE</button>
+      <button type='primary' size='mini' bindtap='reject'>REJIECT</button>  
+   </view>
+ 
+
+  <modal hidden="{{hiddenEditbuttom}}" title="编辑货架信息" confirm-text="提交" bindcancel="hideModal" bindconfirm="editSubmit">  
+    <input class='b1' bindinput='locationInput' bindconfirm="editSubmit"></input>  
+  </modal>
+  <modal hidden="{{hidden_editApply}}" title="该位置是否应用到之后的样品？" confirm-text="确认" bindcancel="hideModal" bindconfirm="editApply">
+  </modal>
+  <modal hidden="{{hidden_approveComfirm}}" title="确认APPROVE？" confirm-text="确认" bindcancel="hideModal" bindconfirm="requestApprove">
+  </modal>
+  <modal hidden="{{hidden_rejectComfirm}}" title="确认驳回申请？" confirm-text="确认" bindcancel="hideModal" bindconfirm="requestReject">
+  </modal>
+
+
+<view class='backwindow' wx:if="{{view_sampleInfo}}" >
+  <view class='mask' bindtap='hideModal'></view>
+  <view class="popwindow" bindtap='hideModal'>
+   <view class='ml20'>
+      <text class='sampletitle'>样品详情</text> 
+      <image class='sampleimg'  src='{{sampleimg}}'></image>     
+      <text class='sampletxt' selectable>\n产品名称:{{sampleInfo.displayname}}</text>
+      <text class='sampletxt' selectable>\n产品类别:{{sampleInfo.productcategory}}</text>
+      <text class='sampletxt' selectable>\nBarcode:{{sampleInfo.barcode}}</text>
+      <text class='sampletxt' selectable>\n位置:{{sampleInfo.location}}</text>
+      <text class='sampletxt' selectable>\n登记人:{{sampleInfo.register}}</text>
+      <text class='sampletxt' selectable>\n代管人:{{sampleInfo.owner}}</text>
+      <text class='sampletxt' selectable>\n登记时间：{{sampleInfo.registtime}}</text>
+      <text class='sampletxt' selectable>\n更新时间：{{sampleInfo.updatetime}}</text>
+      <text class='sampletxt' selectable>\n状态:{{sampleInfo.status}}</text>
+      <text class='sampletxt' selectable>\n样品用途:{{sampleInfo.sampleUseage}}</text>
+      <text class='sampletxt' selectable>\n样品去处：{{sampleInfo.sampleDest}}</text>
+      </view>
+ </view> 
+</view>

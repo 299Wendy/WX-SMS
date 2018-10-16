@@ -1,0 +1,42 @@
+  <view class="tab-header">
+    <text  selectable>流程号：{{ProcessID}}</text>
+    <text  selectable>\n状态：{{ProcessStatus}}</text>
+  </view>
+  <view class="tab-type">
+    <text selectable>申请类型：{{ProcessType}}</text>
+    <text selectable>\n申请者: {{Applyer}}</text>
+    <text  wx:if="{{ProcessType!='入库'}}" selectable>\n样品去处：{{sampleDest}}；</text>
+    <text  wx:if="{{ProcessType!='入库'}}" selectable>样品用途：{{sampleUseage}}</text>
+  </view>
+  <scroll-view class="tab-content">
+    <view class='list-content' wx:for="{{ProcInfo}}" wx:key="barcode" wx:for-item="ProcInfoitem">
+      <view class='source' >
+        <text class='list-txt list-title' >产品名称:{{ProcInfoitem.displayname}}</text>
+        <text class='list-txt' >\n产品类别:{{ProcInfoitem.productcategory}}</text>
+        <text class='list-txt' >Barcode:{{ProcInfoitem.barcode}}</text>
+        <text class='list-txt' >\n登记人:{{ProcInfoitem.register}}</text>         
+        <text class='list-txt' >代管人:{{ProcInfoitem.owner}}</text>
+        <text class='list-txt'>\n位置:{{ProcInfoitem.location}}</text>  
+        <text class='list-txt' >状态:{{ProcInfoitem.status}}</text>
+      </view>
+      <view wx:if="{{buttonVisible&Imgflg}}" class='source-img' >
+      <image class='image' bindtap='edit' src="{{editImg}}" data-index='{{index}}'></image>
+      </view>
+
+    </view>
+  </scroll-view>
+  <view wx:if="{{buttonVisible}}" class='buttom-bar'> 
+      <button type='primary' size='mini' bindtap='approve'>APPROVE</button>
+      <button type='primary' size='mini' bindtap='reject'>REJIECT</button>  
+  </view>
+
+  <modal hidden="{{hiddenEditbuttom}}" title="编辑货架信息" confirm-text="提交" bindcancel="hideModal" bindconfirm="editSubmit">  
+    <input class='b1' bindinput='locationInput' bindconfirm="editSubmit"></input>  
+  </modal>
+  <modal hidden="{{hidden_editApply}}" title="该位置是否应用到之后的样品？" confirm-text="确认" bindcancel="hideModal" bindconfirm="editApply">
+  </modal>
+  <modal hidden="{{hidden_approveComfirm}}" title="确认APPROVE？" confirm-text="确认" bindcancel="hideModal" bindconfirm="requestApprove">
+  </modal>
+  <modal hidden="{{hidden_rejectComfirm}}" title="确认驳回申请？" confirm-text="确认" bindcancel="hideModal" bindconfirm="requestReject">
+  </modal>
+

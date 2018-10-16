@@ -1,0 +1,256 @@
+@import "../../common/message/message.wxss";
+
+.search-hd {
+    position: fixed;
+    top:-1rpx;
+    width: 720rpx; 
+    height: 80rpx;
+    background-color: white;
+    box-sizing: border-box;
+    margin-left: 15rpx;
+    margin-right: 15rpx;
+}
+.search-area{
+  margin-top: 2rpx;
+}
+
+.search-type {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 120rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    border-right: 1px solid #eee;
+    font-size: 24rpx;
+}
+
+.search-txt {
+    box-sizing: border-box;
+    width: 100%;
+    height: 80rpx;
+    padding-left: 140rpx;
+    padding-right: 120rpx;
+    border-radius: 10rpx;
+    border: 1px solid #eee;
+    font-family: "微软雅黑";
+    font-size: 28rpx;
+}
+.search-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 80rpx;
+    width: 120rpx;
+    text-align: center;
+    line-height: 80rpx;
+    font-size: 28rpx;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+.search-number{
+  background-color: #ccc;
+  font-size: 26rpx;
+}
+
+.search-item {
+  position: fixed;
+  margin-top: 110rpx;
+  margin-bottom: 80rpx;
+  height: 1000rpx;
+}
+.item-data{
+  margin-top: 10rpx;
+  margin-left: 15rpx;
+  margin-bottom: 10rpx;
+  width: 620rpx;
+}
+.productName{
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.list-title {
+    font-size: 30rpx;
+    color: #333;
+    border-bottom: 3rpx #999;
+    font-weight: bold;
+}
+.source{
+    color: #546379;
+    font-size: 14px;    
+    margin: 10rpx;
+    width: 720rpx;
+}
+.addImag{
+  width:400rpx;
+  height:400rpx;
+ }
+ .trolleyAddImg{
+   width: 80rpx;
+   height: 80rpx;
+   margin-left: 100rpx;
+ }
+ .mini-scan-view{
+   display: flex;
+   align-items: center;
+   border-bottom: 1rpx solid #ddd;
+ }
+ .sacn-text{
+  margin-left: 50rpx;
+ }
+.nullTip{
+  position: fixed;
+  text-align: center;
+  width: 100%;
+  margin-top: 100rpx;
+}
+.b1{
+  border: 1rpx solid #ddd;
+  height: 65rpx;
+  margin-bottom: 20rpx;
+}
+.buttom-bar{
+  z-index: 5;
+  position: fixed;
+  bottom: 0rpx;
+  display: flex;
+  flex-direction: row;
+	width:100%; 
+  height: 60rpx;
+  padding-bottom: 20rpx;
+  background-color: white;
+}
+.trolley{
+  z-index: 5;
+  width: 240rpx;
+  display: flex;
+  flex-direction: row;
+}
+.trolley-image{
+  z-index: 5;
+  width: 90rpx;
+  height: 90rpx;
+  position: relative;
+  bottom: 30rpx;
+  left: 40rpx;
+}
+.trolley-number{
+  z-index: 5;
+  position: relative;
+  width: 40rpx;
+  height: 60rpx;
+  bottom: 42rpx;
+  display: flex;
+  align-items: center;
+}
+.trolley .oneNumber{
+left: 17rpx;
+}
+.trolley .twoNumber{
+  left:11rpx;
+}
+.trolley-number text{
+  color: yellow;
+  font-size: 22rpx;
+}
+.operation-area{
+  margin-top: 10rpx;
+  width: 500rpx;
+}
+.operation-area button{
+  margin-left: 15rpx;
+  font-size: 24rpx;
+}
+.trolley-box-view, .trolley-box-view .mask{
+  position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+.trolley-box-view .mask{
+  background: rgba(0,0,0,0.7);
+}
+.trolley-title{
+  text-align: center;
+  position: relative;
+  top: -20rpx;
+}
+.trolley-list{
+  position: absolute;
+	left: 0;
+	bottom: 80rpx;
+	width: 100%;
+	background: white;
+  padding-top: 50rpx;
+	padding-bottom: 30rpx;
+}
+.trolley-list .height700{
+  height: 700rpx;
+}
+.trolley-list .height-auto{
+  height: 100%;
+}
+.trolley-item-data{
+  margin: 10rpx 0rpx;
+  width: 100%;
+  margin-right:0;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  -webkit-transform: translateX(120rpx);
+  transform: translateX(120rpx);
+  margin-left: -105rpx
+}
+.source-show-area{
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1rpx solid #ddd;
+  width: 100%;
+  overflow: hidden
+}
+.modal-rightView{
+  width: 120rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-transform: translateX(120rpx);
+  transform: translateX(120rpx);
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+}
+.touch-move-active .trolley-item-data,.touch-move-active .modal-rightView {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+.rightView{
+  display: flex;
+  align-items: center;
+  margin-right: 10rpx;
+  margin-left: 10rpx;
+}
+.rightImage{
+  width: 80rpx;
+  height: 80rpx;
+ 
+}
+.modal-rightImage{
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.productDetail{
+  font-size: 24rpx;
+  margin-right: 10rpx;
+}
+
+.addImageMini{
+height: 50rpx;
+width: 50rpx;
+padding-left: 10rpx;
+margin: 8rpx;
+}
+.text-center{
+   text-align: center;
+ }

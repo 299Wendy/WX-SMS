@@ -1,0 +1,75 @@
+<view class='search-area'>
+  <input class="search-txt" bindconfirm='search' bindinput='searchBindInput' placeholder="输入关键字搜索"/>
+  <button class="search-btn" bindtap="search">搜索</button>
+  <button class='switch-btn' type='primary'>{{switchValue}}</button>
+</view>
+<view class='add-device-bar'>
+  <text wx:if='{{deviceType == "pcType"}}'>电脑设备</text>
+  <text wx:if='{{deviceType == "equipmentType"}}'>仪器仪表设备</text>
+  <button type='primary' class='add-device-button' bindtap='showAddPC'>新增设备</button>
+</view>
+<view class='table'>
+  <view class='table-title'>
+    <view>设备编号</view>
+    <view>设备名称</view>
+    <view>保修有效期</view>
+    <view>状态</view>
+    <view>拥有者</view>
+  </view>
+  <scroll-view scroll-y class='table-data-scroll'>
+  <view  class="table-data {{tableList.showTouchDel?'touch-move-active':''}}" wx:for='{{table}}' wx:key='' wx:for-item='tableList'  data-index='{{index}}' bind:touchstart="touchstart" bind:touchmove="touchmove">
+    <view class='table-data-part' bindtap='viewDetail'>
+      <view>{{tableList.DeviceNo}}</view>
+      <view>{{tableList.DeviceName}}</view>
+      <view>{{tableList.ValidDate}}</view>
+      <view>{{tableList.Status}}</view>
+      <view>{{tableList.Owner}}</view>
+    </view>
+     <view class='delete' bindtap='showDeleteConfirm'>
+      <text>删除</text>
+    </view> 
+  </view>
+  </scroll-view>
+</view>
+<modal hidden='{{hiddenPCdetail}}' title="设备详情" confirm-text="保存" bindcancel="hideModal" bindconfirm="saveDetail">
+  <view class='pc-detail'>
+    <view><text class='lable'>设备编号:</text>
+    <input class='value' value='{{rowDetail.DeviceNo}}' bindinput='DeviceNoInput'></input></view>
+    <view><text class='lable'>设备名称:</text>
+    <input class='value' value='{{rowDetail.DeviceName}}' bindinput='DeviceNameInput'></input></view>
+    <view><text class='lable'>保修有效期:</text>
+    <input class='value' value='{{rowDetail.ValidDate}}' bindinput='ValidDateInput'></input></view>
+    <view><text class='lable'>状态:</text>
+    <input class='value' value='{{rowDetail.Status}}' bindinput='StatusInput'></input></view>
+    <view><text class='lable'>商标编号:</text>
+    <input class='value' value='{{rowDetail.BrandNo}}' bindinput='BrandNoInput'></input></view>
+    <view><text class='lable'>拥有者:</text>
+    <input class='value' value='{{rowDetail.Owner}}' bindinput='OwnerInput'></input></view>
+    <view><text class='lable'>位置:</text>
+    <input class='value' value='{{rowDetail.Location}}' bindinput='LocationInput'></input></view>
+    <view><text class='lable'>用途:</text>
+    <input class='value' value='{{rowDetail.Usage}}' bindinput='UsageInput'></input></view>
+  </view>
+</modal>
+<modal hidden="{{hiddenDeleteComfirm}}" title="此操作将删除本行记录，确认删除？" confirm-text="确认" bindcancel="hideModal" bindconfirm="confirmDelete">
+</modal>
+<modal hidden='{{hiddenAddPC}}' title="新增设备" confirm-text="新增" bindcancel="hideModal" bindconfirm="addPC">
+  <view class='pc-detail'>
+    <view><text class='lable'>设备编号:</text>
+    <input class='value' bindinput='addDeviceNoInput'></input></view>
+    <view><text class='lable'>设备名称:</text>
+    <input class='value' bindinput='addDeviceNameInput'></input></view>
+    <view><text class='lable'>保修有效期:</text>
+    <input class='value' bindinput='addValidDateInput'></input></view>
+    <view><text class='lable'>状态:</text>
+    <input class='value' bindinput='addStatusInput'></input></view>
+    <view><text class='lable'>商标编号:</text>
+    <input class='value' bindinput='addBrandNoInput'></input></view>
+    <view><text class='lable'>拥有者:</text>
+    <input class='value' bindinput='addOwnerInput'></input></view>
+    <view><text class='lable'>位置:</text>
+    <input class='value' bindinput='addLocationInput'></input></view>
+    <view><text class='lable'>用途:</text>
+    <input class='value' bindinput='addUsageInput'></input></view>
+  </view>
+</modal>

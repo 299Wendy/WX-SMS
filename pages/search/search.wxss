@@ -1,0 +1,135 @@
+
+.search-hd {
+    position: fixed;
+    top:-1rpx;
+    width: 720rpx; 
+    height: 80rpx;
+    background-color: white;
+    box-sizing: border-box;
+    margin-left: 15rpx;
+    margin-right: 15rpx;
+}
+.search-area{
+  margin-top: 2rpx;
+}
+.search-number{
+  background-color: #ccc;
+  font-size: 26rpx;
+}
+.search-type {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 120rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    border-right: 1px solid #eee;
+    font-size: 24rpx;
+}
+
+.search-txt {
+    box-sizing: border-box;
+    width: 100%;
+    height: 80rpx;
+    padding-left: 140rpx;
+    padding-right: 120rpx;
+    border-radius: 10rpx;
+    border: 1px solid #eee;
+    font-family: "微软雅黑";
+    font-size: 28rpx;
+}
+
+.search-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 80rpx;
+    width: 120rpx;
+    text-align: center;
+    line-height: 80rpx;
+    font-size: 28rpx;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.search-item {
+  margin-top: 110rpx;
+  height: 1090rpx;
+}
+.list-txt {
+    margin-bottom: 15rpx;
+    color: #666;
+    font-size: 25rpx;
+
+}
+.list-content{
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1rpx solid #ddd;
+  width: 100%;
+  overflow: hidden
+  }
+
+
+.list-title {
+    font-size: 30rpx;
+    color: #333;
+    border-bottom: 3rpx #999;
+}
+.source{
+  color: #546379;
+  margin-top: 10rpx;
+  margin-left: 15rpx;
+  margin-bottom: 10rpx;
+  width: 620rpx;
+}
+.text-center{
+   text-align: center;
+ }
+ .rightView{
+  display: flex;
+  align-items: center;
+  margin-left: 10rpx;
+}
+.rightImg{
+  width: 60rpx;
+  height: 60rpx;
+}
+.confirmWindow, .mask{
+  position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+.popwindow{
+  position: fixed;
+	left: 0;
+	bottom: 30rpx;
+	width: 90%;
+	background: #FFF;
+  padding-top: 50rpx;
+	padding-bottom: 30rpx;
+  margin-left: 38rpx;
+}
+.backwindow .mask{
+  background: rgba(0,0,0,0.7);
+}
+.sampletitle{
+ margin-left: 246rpx;
+ font-family:  Arial, Helvetica, sans-serif;
+ font-size: 36rpx
+}
+.sampleimg{
+ width:580rpx;
+ height:440rpx;
+ margin-left:30rpx;
+}
+.ml10{
+  margin-left:20rpx
+}
+.sampletxt{
+ font-size:30rpx;
+ margin:5rpx;
+}

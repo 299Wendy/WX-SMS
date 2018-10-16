@@ -1,0 +1,216 @@
+Page({
+  data: {
+    hiddenModalMessage:true,
+    modalMessage: '',
+    EID: '',
+    pwd: '',
+    loginType:''
+  },
+
+  // 获取输入账号  
+  EIDInput: function (e) {
+    this.setData({
+      EID: e.detail.value
+    })
+  },
+
+  // 获取输入密码  
+  pwdInput: function (e) {
+    this.setData({
+      pwd: e.detail.value
+    })
+  },
+
+  // 登录  
+  login: function () 
+  {
+    getApp().globalData.token = '';
+    var obj = this;
+    if (obj.data.EID.length == 0 || obj.data.pwd.length == 0) 
+    {
+      this.showTheModal("帐号或密码不能为空！")
+      return false
+    } 
+    if (obj.data.EID.length != 7) {
+      this.showTheModal("EID长度不正确，请重新输入！")
+      return false
+    }
+    if (obj.data.pwd.length < 6) {
+      this.showTheModal("密码不得小于6位！")
+      return false;
+    }
+    wx.showLoading({
+      title: '登录中...',
+      mask:true
+    })
+    this.setData({
+      loginType: "eid"
+    })
+    this.getWXcode();
+  },
+  wxlogin:function(){
+    wx.showLoading({
+      title: '登录中...',
+      mask: true
+    })
+    this.setData({
+      loginType:"wx"
+    })
+    this.getWXcode();
+  },
+  loginSuccessAction:function(){
+    wx.showToast({
+      title: '登录成功！',
+      icon: 'success',
+      duration: 1000,
+      success: function (res) {
+        wx.request({
+          url: getApp().globalData.host + '/getuserinfo',
+          data: {
+            "access_token": getApp().globalData.token,
+            "access_type": "WX",
+          },
+          method: "POST",
+          header: {
+            'content-type': "application/json"
+          },
+          success: function (data) {
+            getApp().globalData.UserInfo = data.data.ret;
+          }
+        })
+      }
+    })
+    setTimeout(function () {
+      wx.reLaunch({
+        url: '../../pages/home/index'
+      })
+    }, 1000)
+  },
+  //根据变量弹出提示框
+  showTheModal: function (title) {
+    this.setData({
+      modalMessage: title,
+      hiddenModalMessage: false,
+    })
+  },
+  //取消/隐藏模态框
+  hideModal: function () {
+    this.setData({
+      hiddenModalMessage: true
+    })
+  },
+  //调用后台wxlogin
+  getWXlogin:function(){
+    wx.request({
+      url: getApp().globalData.host + '/wxlogin',
+      method: "POST",
+      header: {
+        'content-type': 'application/json'
+      },
+      data: {
+        openID: getApp().globalData.openID,
+      },
+      success: res => {
+        wx.hideLoading()
+        if (res.data.ret != -1) {
+          getApp().globalData.token = res.data.ret;
+          this.loginSuccessAction()
+        } else {
+          this.showTheModal("该微信号没有绑定EID！\n请用EID登录绑定微信后使用微信登录！")
+        }
+      }
+    })
+  },
+  //调用后台login
+  getlogin:function(){
+    wx.request({
+      url: getApp().globalData.host + '/login',
+      data: {
+        "access_token": getApp().globalData.token,
+        "EID": this.data.EID,
+        "pwd": this.data.pwd,
+        "access_type": "WX"
+      },
+      method: "POST",
+      header: {
+        'content-type': "application/json"
+      },
+      success: data => {
+        wx.hideLoading()
+        if (data.data.ret == '400006') {
+          this.showTheModal("用户名不正确！")
+        }
+        else if (data.data.ret == '400007') {
+          this.showTheModal("密码不正确！")
+        }
+        else if (data.data.ret == '400010') {
+          this.showTheModal('用户已登录！')
+        }
+        else {
+          getApp().globalData.token = data.data.ret;
+          this.loginSuccessAction()
+        }
+      }
+    }) 
+  },
+
+  //调用wx.login换取code
+  getWXcode:function(){
+    // 登录
+    wx.login({
+      success: res => {
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        var code = res.code
+        //appid和secret修改成自己的，后期会放到后台获取
+        // var appID = 'wx6ddf6d493c0cf747'
+        // var secret = '05dbef8f87dc662cb988fc91b11b446d'
+          /*  //测试的时候可以用下面链接替换从服务器获取openID
+              wx.request({
+                url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx6ddf6d493c0cf747&secret=05dbef8f87dc662cb988fc91b11b446d&js_code=' + code + '&grant_type=authorization_code',
+                data: {},
+                header: {
+                  'content-type': 'json'
+                },
+                success: res => {
+                  getApp().globalData.openID = res.data.openid //返回openid
+                  //根据loginType调用
+                  if (this.data.loginType == 'wx'){
+                    this.getWXlogin()
+                  }else{
+                    this.getlogin()
+                  }
+                  console.log(res.data.openid)
+                }
+              })*/
+        this.getrequestUrl(code)
+      }
+    })
+  },
+
+  //用code从后台换取url
+  getrequestUrl:function(code){
+    wx.request({
+      url: getApp().globalData.host + '/getOpenID',
+      method: "POST",
+      header: {
+        'content-type': 'application/json'
+      },
+      data: {
+        code: code,
+      },
+      success: res => {
+        console.log(res.data.ret)
+        getApp().globalData.openID = res.data.ret //返回openid
+        //根据loginType调用
+        if (this.data.loginType == 'wx') {
+          this.getWXlogin()
+        } else {
+          this.getlogin()
+        }
+      }
+    })
+  },
+  //页面显示函数
+  onShow: function () {
+  }
+})  

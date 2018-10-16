@@ -1,0 +1,17 @@
+<view class='data-area'>
+  <view class='search-number' wx:if="{{showSearchAcount}}">
+    <text>共 {{mySampleList.length}} 个样品</text>
+  </view>
+  <scroll-view scroll-y class='source-body'>
+    <view class='source-show-area' wx:for="{{mySampleList}}" wx:key="barcode" wx:for-item="dataList">
+    
+      <view class='item-data' >
+        <text class='productName' selectable>产品名称:{{dataList.displayname}}</text>
+        <text class='productDetail' selectable>\n产品类别:{{dataList.productcategory}}</text>
+        <text class='productDetail' selectable>Barcode:{{dataList.barcode}}</text>
+        <text class='productDetail' selectable>登记人:{{dataList.register}}</text>
+      </view>
+    </view>
+
+  </scroll-view>
+</view>

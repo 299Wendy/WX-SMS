@@ -1,0 +1,101 @@
+
+Page({
+  data:{
+    searchType: ["产品名称", "产品类别", "库存状态", "代管人", "登记人", "Barcode"],
+    searchValue:['name', 'category', 'status', 'owner', 'register', 'barcode'],
+    searchOption:'',
+    index: 0,
+    showSearchAmount:false,
+    hiddenModalMessage:true,
+    searchList:[],
+    searchInput:'',
+    modalMessage: '',
+    isFromSearch: true,   // 用于判断searchList数组是不是空数组，默认true，空的数组  
+    searchPageNum: 1,   // 设置加载的第几次，默认是第一次  
+    callbackcount: 15,      //返回数据的个数  
+    searchLoading: false, //"上拉加载"的变量，默认false，隐藏  
+    searchLoadingComplete: false  //“没有数据”的变量，默认false，隐藏  
+
+  },
+  //picker的变动函数 
+  searchOptionChangeEvent: function (e) {
+    this.setData({
+      index: e.detail.value
+    })
+  }, 
+  searchBindInput: function (e) {  
+    this.setData({
+      searchInput: e.detail.value
+    })   
+  },
+  //搜
+  search: function () {
+    var that = this;
+    var sList=[];//查询结果缓存
+    var sLength = 0;
+    that.setData({
+      searchList: []
+    })
+    var searchOption = this.data.searchValue[this.data.index];
+    var searchWord = this.trim(this.data.searchInput)
+    if (searchWord.length == 0) {
+      this.showTheModal("搜索内容不能为空！")
+      return false;
+    }
+    wx.showLoading({
+      title: '搜索中...',
+      mask: true
+    })
+    wx.request({
+      url: getApp().globalData.host +"/searchSample",
+      method: "POST",
+      header: {
+        'content-type': 'application/json'
+      },
+      data: {
+        access_token: getApp().globalData.token,
+        searchOption: searchOption,
+        search_word: searchWord
+      },
+      success: res => {
+        wx.hideLoading();
+        this.setValueForSearchList(res.data.ret)
+      }
+    })
+  },
+  setValueForSearchList: function(data){
+    var tempList = [];
+    var showNotice = false;
+    var resultLength = data.length;
+    if (resultLength > 200){
+      tempList = data.slice(0, 200)
+      showNotice = true;
+    }else{
+      tempList = data
+    }
+    this.setData({
+      searchList: tempList,
+      showSearchAmount: true
+    })
+    if (showNotice) {
+      this.showTheModal("查询总数:" + resultLength + "条,只显示前200条数据！")
+    }
+  },
+  //取消/隐藏模态框
+  hideModal: function () {
+    this.setData({
+      hiddenModalMessage: true
+    })
+  },
+  //根据变量弹出提示框
+  showTheModal: function (title) {
+    this.setData({
+      modalMessage: title,
+      hiddenModalMessage: false,
+    })
+  },
+  // 去前后空格  
+  trim:function(str) {
+    return str.replace(/(^\s*)|(\s*$)/g, "");
+  } 
+})

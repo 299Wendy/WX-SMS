@@ -1,0 +1,16 @@
+
+<view class="flex-warp">
+  <view class="demo1" > 
+    <image class="img" mode="widthFix" bindtap="InputTap" src="{{image2URL}}">样品入库          </image>
+    <image class="img1" mode="widthFix" bindtap="CheckTap" src="{{image1URL}}">样品查询          </image>
+  </view >
+    <view class="demo2"> 
+      <image class="img" mode="widthFix" bindtap="OutputTap" src="{{image3URL}}">样品出库        </image>
+      <image class="img1" mode="widthFix" bindtap="SetupTap" src="{{image4URL}}">系统设置         </image>
+  </view>
+</view>
+<modal hidden="{{hiddenModalMessage}}" bindcancel="hidePopUp" bindconfirm="toSetup">
+  <view class='text-center'>
+    <text>系统检测到你的EID还没有和微信绑定\n是否跳转到绑定页面？</text>
+  </view>
+</modal>

@@ -1,0 +1,27 @@
+.data-area{
+  width: 100%;
+}
+.source-body{
+  height: 1180rpx;
+}
+.source-show-area{
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1rpx solid #ddd;
+}
+.item-data{
+  margin: 10rpx;
+  width: 720rpx;
+}
+.productName{
+  font-size: 30rpx;
+  font-weight: bold;
+}
+.productDetail{
+  font-size: 24rpx;
+  margin-right: 10rpx;
+}
+.search-number{
+  background-color: #ccc;
+  font-size: 26rpx;
+}

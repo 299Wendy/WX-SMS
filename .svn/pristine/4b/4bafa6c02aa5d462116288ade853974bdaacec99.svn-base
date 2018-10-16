@@ -1,0 +1,41 @@
+<view class="user-info-view">
+  <view class='user-pic'>
+    <image class="userinfo-avatar" src="{{userAvatarUrl}}" background-size="cover"></image>
+  </view>
+  <view class='user-detail'>
+    <view class='username'><text>{{nickName}}</text></view>
+    <view><text>EID：{{EID}}</text></view>
+    <view><text>部门：{{department}}</text></view>
+  </view>
+</view>
+<view>
+  <view class="body1" bindtap='changePassword'>修改密码</view>
+  <view class="body1" bindtap='mySample'>我的样品</view>
+  <view class="body1" bindtap='bindingWX'>绑定微信</view>
+  <view class="body1" bindtap='contactUs'>问题反馈</view>
+  <view class="body1" bindtap='about'>关于</view>
+</view>
+<view class='quit-area'>
+  <view class="body2" type='primary' bindtap='logout'>退出登录</view>
+</view>
+<modal hidden="{{hiddenAbout}}" bindcancel="hideModal" bindconfirm="hideModal"  no-cancel>
+  <view class='about'>
+    <text selectable>Version:V1.0</text>
+  </view>
+</modal>
+<modal hidden="{{hiddenContactUs}}" bindcancel="hideModal" bindconfirm="sendQuestion" confirm-text="发送" >    
+    <view>问题描述</view>
+    <textarea class='border2' bindinput="questionInput" selectable></textarea>
+</modal>
+<modal hidden="{{hiddenChangePassword}}" title='修改密码' bindcancel="hideModal" bindconfirm="changePWD" >
+  <view class='change-password-area'>
+    <input class='border1 change-password-input' bindinput='originPWInput' placeholder='请输入原密码' password></input>
+    <input class='border1 change-password-input' bindinput='newPWInput' placeholder='请输入新密码' password></input>
+    <input class='border1 change-password-input' bindinput='confirmNewPWInput' placeholder='再次输入新密码' password></input>
+  </view>
+</modal>
+<modal hidden="{{hiddenModalMessage}}" bindcancel="hidePopUp" bindconfirm="hidePopUp"  no-cancel>
+  <view class='text-center'>
+    <text selectable>{{modalMessage}}</text>
+  </view>
+</modal>

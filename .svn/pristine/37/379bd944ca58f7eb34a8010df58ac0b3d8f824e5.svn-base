@@ -1,0 +1,96 @@
+<view class="search-hd">
+  <view class='search-area'>
+    <view class="search-type" >
+      <picker class='' name='searchOption' bindchange='searchOptionChangeEvent' value="{{pickIndex}}" range="{{searchPickArray}}">
+        <view class=''>
+        {{searchPickArray[pickIndex]}}
+        </view>
+      </picker>
+    </view>            
+    <input class="search-txt" bindconfirm='search' bindinput='searchBindInput' value="{{searchInput}}" placeholder="输入关键字搜索"/>
+    <button class="search-btn" bindtap="search">搜索</button>
+  </view>
+  <view class='search-number' wx:if='{{showSearchAmount}}'>
+    <text>查询结果 {{saerchAmout}} 条</text>
+  </view>
+</view>
+<view class='scan-view' wx:if='{{!showSearchResult}}'>
+  <view class='nullTip'>
+      <image class='addImag' bindtap='takePhoto' src='{{scanImage}}'></image>
+       <text>\n扫描barcode出库</text> 
+      <text>\n{{barcodeDisplay}}</text>
+  </view>
+</view>
+<scroll-view scroll-y class='source-body' wx:if='{{showSearchResult}}'>
+  <view class='source-show-area' wx:for="{{checkoutList}}" wx:key="barcode" wx:for-item="searchList" >
+    <view class='item-data' >
+      <text class='productName' selectable>产品名称:{{searchList.displayname}}</text>
+      <text class='productDetail' selectable>\n产品类别:{{searchList.productcategory}}</text>
+      <text class='productDetail' selectable>Barcode:{{searchList.barcode}}</text>
+      <text class='productDetail' selectable>位置:{{searchList.location}}</text>
+      <text class='productDetail' selectable>\n登记人:{{searchList.register}}</text>
+      <text class='productDetail' selectable>代管人:{{searchList.owner}}</text>
+      <text class='productDetail' selectable>状态:{{searchList.status}}</text>
+    </view>
+    <view class='rightView'>
+      <image class='rightImage' bindtap='changeButtonImage' wx:if="{{!searchList.ImgFlag}}" src='{{addToTrolley}}' data-index='{{index}}'></image>
+      <image class='rightImage' bindtap='changeButtonImage' wx:else src='{{checkedMark}}' data-index='{{index}}'></image>
+    </view>
+  </view>
+</scroll-view>
+<view class="buttom-bar">
+  <view class='trolley'>
+    <image class='trolley-image' src='{{trolleyImage}}' bindtap='showTrolleyList'></image> 
+    <view class="trolley-number {{twoNum?'twoNumber':'oneNumber'}}" id='trolleyNumber'>
+      <text>{{outTrolleyNumber}}</text>
+    </view>
+  </view>
+  <view class='operation-area'>
+    <button type='primary' size='mini' bindtap='clearTrolley' wx:if='{{showTrolley}}'>清空</button>
+    <button type='primary' size='mini' bindtap='checkout' wx:if='{{showTrolley}}'>一键出库</button>
+  </view>
+</view>
+<modal hidden="{{hiddenSampleUsage}}" title="样品用途&去处" confirm-text="提交" bindcancel="hideModal" bindconfirm="submit">
+    <text>样品用途</text>
+    <input class='border1' value='{{sampleUseage}}' bindinput='sampleUseageBindInput' ></input>
+    <view>样品去处</view>
+    <input class='border1' value='{{sampleDest}}' bindinput='sampleDestBindInput' ></input>
+</modal>
+<modal hidden="{{hiddenFinalComfirm}}" title="确认提交？" confirm-text="确认" bindcancel="hideModal" bindconfirm="confirmSubmit">
+</modal>
+<view class='trolley-box-view' wx:if='{{showTrolley}}'>
+  <view class='mask' bindtap='hideTrolley'></view>
+  <view class='trolley-list'>
+    <view class='trolley-title'><text>出库样品列表</text></view>
+    <scroll-view scroll-y class="{{fixHeight?'height700':'height-auto'}}" >
+    <view class='mini-scan-view'>
+      <image class='trolleyAddImg'  bindtap='takePhoto' src='{{scanImage}}'></image>
+      <text class='sacn-text'>扫描barcode出库</text>
+    </view>
+    <view class="source-show-area {{searchList.showTouchDel?'touch-move-active':''}}" wx:for="{{checkoutTrolleyList}}" wx:key="" wx:for-item="searchList" bind:touchstart="touchstart" bind:touchmove="touchmove" data-index='{{index}}'>
+      <view class='trolley-item-data' >
+        <text class='productName' selectable>产品名称:{{searchList.displayname}}</text>
+        <text class='productDetail' selectable>\n产品类别:{{searchList.productcategory}}</text>
+        <text class='productDetail' selectable>Barcode:{{searchList.barcode}}</text>
+        <text class='productDetail' selectable>位置:{{searchList.location}}</text>
+        <text class='productDetail' selectable>\n登记人:{{searchList.register}}</text>
+        <text class='productDetail' selectable>代管人:{{searchList.owner}}</text>
+        <text class='productDetail' selectable>状态:{{searchList.status}}</text>
+      </view>
+      <view class='modal-rightView' bindtap='deleteSample' data-index='{{index}}' data-barCode='{{searchList.barcode}}'>
+        <image class='modal-rightImage' src='{{deleteFromTrolley}}'></image>
+      </view>
+     </view>
+   </scroll-view>
+  </view>
+</view>
+<modal hidden="{{hiddenModalMessage}}" bindcancel="hidePopUp" bindconfirm="hidePopUp"  no-cancel>
+  <view class='text-center'>
+    <text selectable>{{modalMessage}}</text>
+  </view>
+</modal>
+<modal hidden="{{hiddenpopupMessage}}" bindcancel="PopUp" bindconfirm="PopUp"  no-cancel>
+  <view class='text-center'>
+    <text selectable>{{popupMessage}}</text>
+  </view>
+</modal>

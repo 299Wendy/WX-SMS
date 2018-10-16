@@ -1,0 +1,64 @@
+
+  <view class="tab-header">
+      <view class="tab-header-item {{show == 'todolist' ? 'tab-header-active' : ''}}" data-type="todolist" bindtap="changeViewType">待办事宜</view>
+      <view class="tab-header-item {{show == 'completedList' ? 'tab-header-active' : ''}}" data-type="completedList" bindtap="changeViewType">已完成出入库</view>
+  </view>
+  
+  <scroll-view scroll-y class="tab-content">
+    <view class="tab-content-item" hidden="{{show == 'todolist' ? false : true}}">
+      <block wx:if="{{todolist.length == 0}}">
+       
+      </block>
+      <block wx:else>
+        <view  wx:key="todolistProcessID" wx:for="{{todolist}}" wx:for-item="item" wx:for-index="index" >
+        <view class="item-info">
+        <navigator class='list-content' url='../subNotice/subNotice?ProcessID={{item.ProcessID}}&ProcessStatus={{item.ProcessStatus}}&ProcessType={{item.ProcessType}}&Applyer={{item.ApplyerTrueName}}'>
+        
+          <view class="list-item" >
+            <image  class="list-cover" wx:if="{{item.ProcessType == '出库'}}" src="{{outImg}}"></image>
+            <image  class="list-cover" wx:else  src="{{inImg}}"></image>
+          </view>
+          <view class="source">
+            <text class="list-txt list-title">流程编号：{{item.ProcessID}}</text>
+            <text class="list-txt">\n申请者：{{item.ApplyerTrueName}}</text>
+            <text class="list-txt ml120">  申请类型：{{item.ProcessType}}申请；</text>
+            <text class="list-txt">流程状态：{{item.ProcessStatus}}；</text>
+            <text class="list-txt">更新时间：{{item.UpdateTime}}</text>          
+          </view>
+           </navigator>
+          <view class="item-oper" wx:if="{{item.ProcessStatus == '申请未批准'}}">
+           <view class="oper-delete b1" bindtap="itemDelete" data-index="{{index}}">删除</view>
+        </view>
+        </view>
+      
+        </view>
+      </block>
+    </view>  
+    
+    <view class="tab-content-item" hidden="{{show == 'completedList' ? false : true}}">
+      <block wx:if="{{completedList.length == 0}}">
+       
+      </block>
+
+      <block wx:else>
+        <view wx:key="completedListProcessID" wx:for="{{completedList}}" wx:for-item="completedListItem" wx:for-index="completedListIndex">
+         <navigator class='list-content' url='../subNotice/subNotice?ProcessID={{completedListItem.ProcessID}}&ProcessStatus={{completedListItem.ProcessStatus}}&ProcessType={{completedListItem.ProcessType}}&Applyer={{completedListItem.ApplyerTrueName}}'>
+        
+          <view class="list-item"  >
+            <image  class="list-cover" wx:if="{{completedListItem.ProcessType == '出库'}}" src="{{outImg}}"></image>
+            <image  class="list-cover" wx:if="{{completedListItem.ProcessType == '入库'}}"  src="{{inImg}}"></image>
+            <image  class="list-cover" wx:if="{{completedListItem.ProcessType == '快速出入库'}}"  src="{{quickImg}}"></image>
+          </view>
+          <view class="source" >
+            <text class="list-txt list-title" >流程编号：{{completedListItem.ProcessID}}</text>
+            <text class="list-txt">\n申请者：{{completedListItem.ApplyerTrueName}}</text>
+            <text class="list-txt ml120">  申请类型：{{completedListItem.ProcessType}}申请；</text>
+            <text class="list-txt">流程状态：{{completedListItem.ProcessStatus}}；</text>
+            <text class="list-txt">更新时间：{{completedListItem.UpdateTime}}</text>          
+          </view>
+         
+          </navigator>
+        </view>
+      </block>
+    </view>
+  </scroll-view>

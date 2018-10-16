@@ -1,0 +1,123 @@
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    hiddenModalMessage: true,
+    image1URL:'../../images/search.png',
+    image2URL:'../../images/Input.png',
+    image3URL:'../../images/Output.png',
+    image4URL:'../../images/device.png'
+  },
+  hidePopUp: function () {
+    this.setData({
+      hiddenModalMessage: true
+    })
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+    wx.request({
+      url: getApp().globalData.host + '/checkBindingWXaccount',
+      method: "POST",
+      header: {
+        'content-type': 'application/json'
+      },
+      data: {
+        username: getApp().globalData.UserInfo.UserName
+      },
+      success: res => {
+        if (res.data.ret ==1){
+          this.setData({
+            hiddenModalMessage: false
+          })
+        }
+      }
+    })
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+    
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+    
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    
+  },
+  // 进入入库页面
+  InputTap: function () {
+    var obj = this;
+    wx.navigateTo({
+      url: '../checkin/checkin',
+
+    })
+  },
+  // 进入出库页面
+  OutputTap: function () {
+    wx.navigateTo({
+      url: '../checkout/checkout',
+    })
+  },
+  // 进入页面查询事件， URL ，
+  CheckTap: function () {
+    wx.navigateTo({
+      url: '../search/search',
+    })
+  },
+  // 进入设备管理页面
+  DeviceManageTap: function () {
+    wx.navigateTo({
+      url: '../deviceManager/deviceManager',
+    })
+  },
+  toSetup:function(){
+    this.setData({
+      hiddenModalMessage: true
+    })
+    wx.switchTab({
+      url: '../setup/setup',
+    })
+  }
+})

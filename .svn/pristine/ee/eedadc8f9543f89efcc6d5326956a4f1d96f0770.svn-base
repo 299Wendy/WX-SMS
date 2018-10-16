@@ -1,0 +1,39 @@
+<view class="search-hd">
+  <view class='search-area'>
+    <view class="search-type" >
+      <picker class='' name='searchOption' bindchange='searchOptionChangeEvent' value="{{index}}" range="{{searchType}}">
+        <view class=''>
+        {{searchType[index]}}
+        </view>
+      </picker>
+    </view>            
+    <input class="search-txt" bindconfirm='search' bindinput='searchBindInput' value="{{searchInput}}" placeholder="输入关键字搜索"/>
+    <button class="search-btn" bindtap="search">搜索</button>
+  </view>
+  <view class='search-number' wx:if='{{showSearchAmount}}'>
+    <text>查询结果 {{searchList.length}} 条</text>
+  </view>
+</view>
+
+<scroll-view scroll-y class='search-item'>
+ <block wx:if="{{searchList.length == 0}}">
+ </block>
+  <block wx:else>
+  <view class='list-content' wx:for="{{searchList}}" wx:key="barcode" wx:for-item="searchListitem" >
+    <view class='source' >
+      <text class='list-txt list-title' selectable>产品名称:{{searchListitem.displayname}}</text>
+      <text class='list-txt' selectable>\n产品类别:{{searchListitem.productcategory}}</text>
+      <text class='list-txt' selectable>Barcode:{{searchListitem.barcode}}</text>
+      <text class='list-txt' selectable>位置:{{searchListitem.location}}</text>
+      <text class='list-txt' selectable>\n登记人:{{searchListitem.register}}</text>
+      <text class='list-txt' selectable>代管人:{{searchListitem.owner}}</text>
+      <text class='list-txt' selectable>状态:{{searchListitem.status}}</text>
+    </view>
+  </view>
+  </block>
+</scroll-view>
+<modal hidden="{{hiddenModalMessage}}" bindcancel="hideModal" bindconfirm="hideModal"  no-cancel>
+  <view class='text-center'>
+    <text selectable>{{modalMessage}}</text>
+  </view>
+</modal>
